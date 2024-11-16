@@ -10,13 +10,16 @@ public class JoinTestMain {
         Thread thread2 = new Thread(new MyTask(), "t2");
         Thread thread3 = new Thread(new MyTask(), "t3");
 
+        // 3개 동시에 병렬적으로수행
         thread1.start();
         thread2.start();
         thread3.start();
-
+        
         thread1.join();
         thread2.join();
         thread3.join();
+
+        // join이 없으면 다른 thread가 일하는 동안에 main 스레드가 먼저 꺼질 수도 있다.
 
         System.out.println("모든 스레드 실행 완료");
 
