@@ -15,15 +15,24 @@ public class ThreadStopMainV2 {
         thread.interrupt();
         log("work 스레드 인터럽트 상태1 = " + thread.isInterrupted());
     }
+
     static class MyTask implements Runnable {
         @Override
         public void run() {
             try {
+                // while문 조건에서부터 인터럽트 상태를 체크해야 더 효율적
                 while(true) {
                     log("작업 중");
-                    Thread.sleep(3000);
-                } catch(InterruptedException) { 
+                    Thread.sleep(3000); // 인터럽트 예외 발생 -> 작업 중단
+                }
+            } catch (InterruptedException e) {
+                log("work 스레드 인터럽트 상태2 = " + Thread.currentThread().isInterrupted());
+                log("interrupt message = " + e.getMessage());
+                log("state = " + Thread.currentThread().getState());
             }
+
+            log("자원 정리");
+            log("작업 종료");
         }
     }
 }
